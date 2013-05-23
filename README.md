@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-`$ gem install cando`
+`$ gem install cando --source 'http://github.com/Krugloff/cando'`
 
 ## Usage
 
