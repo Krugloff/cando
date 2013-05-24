@@ -3,33 +3,33 @@ require_relative '../test_helper'
 class AuthorizationTest < Test::Unit::TestCase
   def self.startup
     @@auth = Cando::Authorization.new(Controller)
-      .for_owner(:show)
-      .for_client(:index)
-      .for_admin(:index)
   end
 
   test 'authorization' do
-    assert Controller.filters[0].call(Controller.new)
+    @@auth.for_owner :show
+    assert Controller.filters.last.call Controller.new
   end
 
   test 'no helper' do
     assert_raise Cando::Errors::NoHelper do
-      Controller.filters[1].call(Controller.new)
+      @@auth.for_client :index
+      Controller.filters.last.call Controller.new
     end
   end
 
   test 'access denied' do
     assert_raise Cando::Errors::AccessDenied do
-      Controller.filters[2].call(Controller.new)
+      @@auth.for_admin :create
+      Controller.filters.last.call Controller.new
     end
 
     assert_equal Cando::Errors::AccessDenied.new(:admin).type, :admin
   end
 
   test 'define helper' do
-    before = ApplicationController.instance_methods.size
+    before = Cando::Authorization::Helper.instance_methods.size
     @@auth.for_guest :preview
-    after = ApplicationController.instance_methods.size
+    after = Cando::Authorization::Helper.instance_methods.size
 
     assert after > before
 
