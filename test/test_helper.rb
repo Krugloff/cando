@@ -3,14 +3,7 @@ require 'cando'
 # Классы и методы, которые должны существовать при использовании библиотеки.
 
 class ApplicationController
-  # Internal.
-  def self.helpers
-    @helpers ||= []
-  end
-
-  def self.helper_method(name)
-    self.helpers << name
-  end
+  include Cando::Authorization::Helper
 end
 
 class Controller < ApplicationController

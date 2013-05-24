@@ -36,8 +36,6 @@ module Cando class Authorization
     Helper.class_exec(name, helper) do |name, helper|
       define_method(name) { |&block| block.call if send(helper) }
     end
-
-    ApplicationController.helper_method(name) if defined? ApplicationController
   end
 
 =begin
