@@ -15,4 +15,11 @@ class CandoTest < Test::Unit::TestCase
 
     assert @before < Controller.filters.size
   end
+
+  test 'extend' do
+    Controller.class_exec { extend Cando }
+    Controller.class_exec { authorize { for_owner %i(edit update) } }
+
+    assert @before < Controller.filters.size
+  end
 end
