@@ -26,6 +26,22 @@ Or install it yourself as:
   end
 ~~~~~
 
+ИЛИ
+
+~~~~~ ruby
+  class ApplicationController
+    extend Cando
+  end
+
+  class ArticlesController < ApplicationController
+    authorize do
+      for_client *%(show index)
+      for_owner *%(edit update delete)
+      for_admin *%(new create)
+    end
+  end
+~~~~~
+
 + Ограничение доступа может быть установлено с помощью любых методов вида `for_<helper>`;
 
 + Доступ к переданным действиям будет разрешен только при положительном результате вызова `.client?`,`.owner?`, `.admin?` в теле требуемого действия;
