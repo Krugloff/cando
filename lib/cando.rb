@@ -25,6 +25,25 @@ module Cando
     self
   end
 
+=begin
+  Метод предоставлен для расширения классов действий.
+
+  ~~~~~ ruby
+    class ApplicationController
+      extend Cando
+    end
+
+    class ArticlesController < ApplicationController
+      authorize do
+        # permissions
+      end
+    end
+  ~~~~~
+=end
+  def authorize(&auth)
+    Authorization.new(self).instance_exec &auth
+  end
+
   module Errors
     # Доступ к действию запрещен.
     class AccessDenied < StandardError
