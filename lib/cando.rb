@@ -2,22 +2,27 @@ require 'cando/authorization'
 
 # Основной модуль.
 module Cando
-  class << self
+=begin
+  Метод предоставлен для применения ограничений к классу действий.
 
-    # Используется для применения ограничений к классу действий.
-    def authorize(controller, &auth)
-
-      # ApplicationController может не существовать ранее.
-      if defined? ApplicationController and @first_include.nil?
-        ApplicationController.class_exec do
-          include Cando::Authorization::Helper
-        end
-        @first_include = false
-      end
-
-      yield Authorization.new(controller)
-      self
+  ~~~~~ ruby
+    Cando.authorize(ArticlesController) do |auth|
+      # permissions
     end
+  ~~~~~
+=end
+  def self.authorize(controller, &auth)
+
+    # ApplicationController может не существовать ранее.
+    if defined? ApplicationController and @first_include.nil?
+      ApplicationController.class_exec do
+        include Cando::Authorization::Helper
+      end
+      @first_include = false
+    end
+
+    yield Authorization.new(controller)
+    self
   end
 
   module Errors
