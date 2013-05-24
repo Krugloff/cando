@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = 'cando'
-  spec.version       = '0.1'
+  spec.version       = '0.2'
   spec.summary       = %{Simple authorization framework for Rails.}
   spec.description   = %{Simple authorization using existing helper methods.}
 
