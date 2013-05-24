@@ -52,7 +52,7 @@ Or install it yourself as:
 + Запрет доступа считается исключением  
 `Cando::Errors::AccessDenied`
 
-+ Для ApplicationController (или Cando::Authorization::Helper) будут добавлены соответствующие вспомогательные методы, которые могут быть использованы в шаблонах.
++ Модуль Cando::Authorization::Helper будет содержать соответствующие вспомогательные методы, которые могут быть использованы в шаблонах.
 
   ~~~~~ ruby
     <%= for_admin { create_link } %>
