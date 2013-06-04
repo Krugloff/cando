@@ -19,4 +19,6 @@ class Controller < ApplicationController
   def owner?; true; end
 
   def admin?; false; end
+
+  def president?; true; end
 end

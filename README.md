@@ -60,6 +60,18 @@ Or install it yourself as:
 
   Ссылка будет отображаться только при положительном результате вызова метода `.admin?`.
 
++ Без аргументов будет создаваться только вспомогательный метод. Это может понадобиться в режиме разработки приложения, в случае если код инициализирующий метод не успевает загрузиться.
+
+  ~~~~~ ruby
+    class ApplicationController < ActionController::Base
+      authorize do
+        for_owner
+        for_admin
+        for_client
+      end
+    end
+  ~~~~~
+
 ## Contributing
 
 1. Fork it

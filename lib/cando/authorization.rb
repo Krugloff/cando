@@ -10,12 +10,14 @@ module Cando class Authorization
   Используется для обработки методов вида `for_<name>`, которым передаются идентификаторы действий.
 
   Для каждого метода создается вспомогательный метод с тем же названием и определяется фильтр, выполняющий авторизацию.
+
+  Без аргументов будет создаваться только вспомогательный метод. Это может понадобиться в режиме разработки приложения, в случае если код инициализирующий метод не успевает загрузиться.
 =end
   def method_missing(name, *args)
     if /for_(?<helper>\w+)/ =~ name
       helper << '?'
       define_helper(name, helper)
-      define_filter(helper, args)
+      define_filter(helper, args) unless args.empty?
       self
     end
   end

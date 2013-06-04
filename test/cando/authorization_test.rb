@@ -27,13 +27,29 @@ class AuthorizationTest < Test::Unit::TestCase
   end
 
   test 'define helper' do
-    before = Cando::Authorization::Helper.instance_methods.size
+    before = _helpers_count
     @@auth.for_guest :preview
-    after = Cando::Authorization::Helper.instance_methods.size
+    after = _helpers_count
 
     assert after > before
 
+    before_helpers = _helpers_count
+    before_filters = Controller.filters.size
+    @@auth.for_president
+    after_helpers = _helpers_count
+    after_filters = Controller.filters.size
+
+    assert after_helpers > before_helpers
+    assert_equal after_filters, before_filters
+
     assert Controller.new.for_owner { true }
     assert !Controller.new.for_admin { true }
+    assert Controller.new.for_president { true }
   end
+
+  private
+
+    def _helpers_count
+      Cando::Authorization::Helper.instance_methods.size
+    end
 end
