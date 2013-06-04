@@ -48,15 +48,21 @@ module Cando class Authorization
   ~~~~~
 
   Доступ к переданным действиям будет разрешен только при положительном результате вызова метода `.owner?`.
+
+  Для авторизации всех действий должно передаваться :all.
 =end
   def define_filter(name, actions)
-    @controller.before_filter only: actions do |controller|
+    filter = proc do |controller|
       controller.respond_to?(name) or
         raise Errors::NoHelper.new name, controller.class.name
 
       controller.send(name) or
         raise Errors::AccessDenied.new name
     end
+
+    actions.include?(:all) ?
+    @controller.before_filter(&filter) :
+    @controller.before_filter( { only: actions }, &filter )
   end
 
 =begin

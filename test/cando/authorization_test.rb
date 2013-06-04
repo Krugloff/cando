@@ -8,6 +8,12 @@ class AuthorizationTest < Test::Unit::TestCase
   test 'authorization' do
     @@auth.for_owner :show
     assert Controller.filters.last.call Controller.new
+
+    before = Controller.filters.size
+    @@auth.for_hacker :all
+    after = Controller.filters.size
+
+    assert after > before
   end
 
   test 'no helper' do

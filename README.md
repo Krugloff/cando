@@ -72,6 +72,10 @@ Or install it yourself as:
     end
   ~~~~~
 
++ Для авторизации всех действий должно передаваться :all.
+
+  `authorize { for_client :all }`
+
 ## Contributing
 
 1. Fork it
